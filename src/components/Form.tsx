@@ -21,6 +21,11 @@ const Form = () => {
         setSuccess(true); // Set success to true upon successful form submission
       } catch (error) {
         console.error(error);
+      } finally {
+        setEmail("");
+        setDob("");
+        setAge(0);
+        setPassword("");
       }
     };
 
@@ -28,7 +33,7 @@ const Form = () => {
       postForm();
       setSubmit(false);
     }
-  }, [submit, email, age, password, dateOfBirth]);
+  }, [submit, email, age, password, dateOfBirth, success]);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -39,6 +44,9 @@ const Form = () => {
     return (
       <div className="max-w-md mx-auto mt-4 bg-white p-6 rounded shadow">
         <h1 className="text-3xl text-center text-green-500">Congrats! You Successfully created a user</h1>
+        <Button className="mt-5" onClick={() => setSuccess(false)}>
+          Create another user
+        </Button>
       </div>
     );
   }
