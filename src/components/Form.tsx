@@ -38,7 +38,7 @@ const Form = () => {
   const [dateInputType, setDateInputType] = useState("text");
   const handleDateFocus = () => setDateInputType("date");
 
-  const handleDateBlur = (event) => {
+  const handleDateBlur = (event: { target: { value: any; }; }) => {
     if (!event.target.value) setDateInputType("text");
   };
 
