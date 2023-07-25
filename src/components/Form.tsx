@@ -21,11 +21,6 @@ const Form = () => {
         setSuccess(true); // Set success to true upon successful form submission
       } catch (error) {
         console.error(error);
-      } finally {
-        setEmail("");
-        setDob("");
-        setAge(0);
-        setPassword("");
       }
     };
 
@@ -33,14 +28,7 @@ const Form = () => {
       postForm();
       setSubmit(false);
     }
-  }, [submit, email, age, password, dateOfBirth, success]);
-  
-  const [dateInputType, setDateInputType] = useState("text");
-  const handleDateFocus = () => setDateInputType("date");
-
-  const handleDateBlur = (event: { target: { value: any; }; }) => {
-    if (!event.target.value) setDateInputType("text");
-  };
+  }, [submit, email, age, password, dateOfBirth]);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -50,10 +38,7 @@ const Form = () => {
   if (success) {
     return (
       <div className="max-w-md mx-auto mt-4 bg-white p-6 rounded shadow">
-        <h1 className="text-teal-500 text-3xl text-center font-serif">User Registered.</h1>
-        <Button className="mt-5 py-2 px-4 rounded-full font-serif" onClick={() => setSuccess(false)}>
-          Register Another
-        </Button>
+        <h1 className="text-3xl text-center text-green-500">Congrats! You Successfully created a user</h1>
       </div>
     );
   }
@@ -62,10 +47,9 @@ const Form = () => {
     <div className="max-w-md mx-auto mt-4 bg-white p-6 rounded shadow">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm " htmlFor="email">
-  Email:
-</label>
-
+          <label className="block text-sm font-medium" htmlFor="email">
+            Email:
+          </label>
           <input
             id="email"
             type="email"
@@ -82,19 +66,16 @@ const Form = () => {
           </label>
           <input
             id="dob"
-            type={dateInputType}
+            type="date"
             value={dateOfBirth}
-            onFocus={handleDateFocus}
-            onBlur={handleDateBlur}
             onChange={({ target: { value } }) => setDob(value)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            placeholder=""
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm" htmlFor="age">
+          <label className="block text-sm font-medium" htmlFor="age">
             Age:
           </label>
           <select
@@ -103,7 +84,7 @@ const Form = () => {
             onChange={({ target: { value } }) => setAge(Number(value))}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             required>
-            <option value="" className="text-center"></option>
+            <option value=""> Please choose an option </option>
             {Array.from({ length: 100 }, (_, i) => i + 1).map((age) => (
               <option key={age} value={age}>
                 {age}
@@ -113,7 +94,7 @@ const Form = () => {
         </div>
 
         <div>
-          <label className="block text-sm" htmlFor="password">
+          <label className="block text-sm font-medium" htmlFor="password">
             Password:
           </label>
           <input
@@ -126,7 +107,7 @@ const Form = () => {
           />
         </div>
 
-        <Button type="submit" className="bg-cyan-500 hover:bg-cyan-700 text-white py-2 px-4 rounded-full">
+        <Button type="submit" size="lg">
           Submit
         </Button>
       </form>
